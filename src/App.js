@@ -1,4 +1,3 @@
-import Pagina from "./componentes/layouts/Pagina";
 import TelaCadastroProduto from "./componentes/Telas/TelaCadastroProduto";
 import TelaCadastroCategoria from "./componentes/Telas/TelaCadastroCategoria";
 import TelaMenu from "./componentes/Telas/TelaMenu";
@@ -8,10 +7,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename='/FRONTEND'>
         { //A ordem das rotas é importante 
         }
-        <Routes basename='/FRONTEND'>
+        <Routes >
           <Route path="/produto" element={<TelaCadastroProduto />} />
           <Route path="/categoria" element={<TelaCadastroCategoria />} />
           <Route path="/" element={<TelaMenu />} />
