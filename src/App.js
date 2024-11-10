@@ -11,7 +11,7 @@ function App() {
       <BrowserRouter>
         { //A ordem das rotas é importante 
         }
-        <Routes>
+        <Routes basename='/FRONTEND'>
           <Route path="/produto" element={<TelaCadastroProduto />} />
           <Route path="/categoria" element={<TelaCadastroCategoria />} />
           <Route path="/" element={<TelaMenu />} />
