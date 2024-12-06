@@ -1,7 +1,7 @@
 {
   "name": "sistema",
   "version": "0.1.0",
-  "homepage": "https://https://gabriel-savoldi.github.io/FRONTEND/"
+  "homepage": "https://https://gabriel-savoldi.github.io/FRONTEND/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.4.0",
