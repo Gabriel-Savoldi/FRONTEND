@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "//gabriel-savoldi.github.io/FRONTEND/static/css/main.d221dc40.css",
+    "main.js": "//gabriel-savoldi.github.io/FRONTEND/static/js/main.e2e3f14c.js",
+    "static/media/pagina404.png": "//gabriel-savoldi.github.io/FRONTEND/static/media/pagina404.4bf0805d8d55a31c5142.png",
+    "index.html": "//gabriel-savoldi.github.io/FRONTEND/index.html",
+    "main.d221dc40.css.map": "//gabriel-savoldi.github.io/FRONTEND/static/css/main.d221dc40.css.map",
+    "main.e2e3f14c.js.map": "//gabriel-savoldi.github.io/FRONTEND/static/js/main.e2e3f14c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d221dc40.css",
+    "static/js/main.e2e3f14c.js"
+  ]
+}
