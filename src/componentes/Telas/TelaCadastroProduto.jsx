@@ -29,6 +29,7 @@ export default function TelaCadastroProduto(props) {
         });
     },[]); //listaVazia -> didMount
    
+
     return (
         <div>
             <Pagina>
@@ -59,3 +60,54 @@ export default function TelaCadastroProduto(props) {
     );
 
 }
+
+
+
+
+
+// PARTE DE REDUX
+/*
+import { useState } from "react";
+import TabelaProdutos from "./Tabelas/TabelaProdutos";
+import FormCadProdutos from "./Formularios/FormCadProduto";
+import { useSelector } from "react-redux";
+
+export default function TelaCadastroProduto() {
+  const [exibirTabela, setExibirTabela] = useState(true);
+  const [modoEdicao, setModoEdicao] = useState(false);
+  const [produtoSelecionado, setProdutoSelecionado] = useState({
+        codigo:0,
+        descricao:"",
+        precoCusto:0,
+        precoVenda:0,
+        qtdEstoque:0,
+        urlImagem:"",
+        dataValidade:"",
+        categoria: {}
+  });
+
+  const { listaDeProdutos } = useSelector((state) => state.produtos);
+
+  return (
+    <>
+      {exibirTabela ? (
+        <TabelaProdutos
+          setExibirTabela={setExibirTabela}
+          setModoEdicao={setModoEdicao}
+          setProdutoSelecionado={setProdutoSelecionado}
+        />
+      ) : (
+        <FormCadProdutos
+          listaDeProdutos={listaDeProdutos}
+          setExibirTabela={setExibirTabela}
+          modoEdicao={modoEdicao}
+          setModoEdicao={setModoEdicao}
+          produtoSelecionado={produtoSelecionado}
+          setProdutoSelecionado={setProdutoSelecionado}
+        />
+      )}
+    </>
+  );
+}*/
+
+

@@ -13,7 +13,7 @@ export async function gravarCategoria(categoria){
 }
 
 export async function alterarCategoria(categoria){
-    const resposta = await fetch(urlBase,{
+    const resposta = await fetch(urlBase + "/" + categoria.codigo,{
         'method':"PUT",
         'headers': { 
             'Content-Type':"application/json"
@@ -26,7 +26,7 @@ export async function alterarCategoria(categoria){
 
 export async function excluirCategoria(categoria){
     const resposta = await fetch(urlBase + "/" + categoria.codigo,{
-        'method':"DELETE",
+        'method':"DELETE"
     });
     const resultado = await resposta.json();
     return resultado;

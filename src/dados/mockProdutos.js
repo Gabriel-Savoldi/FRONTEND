@@ -6,7 +6,11 @@ export const produtos = [
         "precoVenda":20.00,
         "qtdEstoque":100,
         "urlImagem":"",
-        "dataValidade":"31/12/2999"
+        "dataValidade":"31/12/2999",
+        "categoria":{
+            "codigo": 1,
+            "descricao": "Camiseta"
+        }
     },
     {
         "codigo":2,
@@ -15,7 +19,11 @@ export const produtos = [
         "precoVenda":36.00,
         "qtdEstoque":50,
         "urlImagem":"",
-        "dataValidade":"31/12/2999"
+        "dataValidade":"31/12/2999",
+        "categoria":{
+            "codigo": 2,
+            "descricao": "blusa de algodão"
+        }
     }
 ];
 

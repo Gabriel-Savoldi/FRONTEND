@@ -1,30 +1,37 @@
 import { Button, Container, Table } from "react-bootstrap";
-import { excluirProduto } from "../../../servicos/servicoProduto";
+import { excluirCliente } from "../../../servicos/servicoCliente";
 
-export default function TabelaProdutos(props) {
+export default function TabelaClientes(props) {
 
-    function editarProduto(produto){
+    function editarCliente(cliente){
         props.setModoEdicao(true);
-        props.setProdutoSelecionado(produto)
+        props.setClienteSelecionado(cliente)
         props.setExibirTabela(false);
     }
 
-    function excluirProdutoFrontEnd(produto){
-        if(window.confirm("Deseja realmente excluir o produto " + produto.descricao)){
-            //abordagem utilizando a sintaxe permitida da linguagem
-            excluirProduto(produto).then((resposta)=>{
-                if(resposta.status){
-                    props.setListaDeProdutos(props.listaDeProdutos.filter(
-                        (item)=>{
-                                    return item.codigo != produto.codigo     
-                                }));
-                }
-                else{
-                    window.alert("Não foi possivel excluir o produto: "+ resposta.mensagem);
-                }
-            })
+    function excluirClienteFrontEnd(cliente) {
+        if (cliente && cliente.codigo) {
+            console.log("Excluindo cliente com código:", cliente.codigo); // Adicionando log
+            if (window.confirm("Deseja realmente excluir o cliente " + cliente.nome)) {
+                excluirCliente(cliente).then((resposta) => {
+                    if (resposta.status) {
+                        props.setListaDeClientes(props.listaDeClientes.filter(
+                            (item) => item.codigo !== cliente.codigo
+                        ));
+                    } else {
+                        window.alert("Não foi possível excluir o cliente: " + resposta.mensagem);
+                    }
+                }).catch((erro) => {
+                    window.alert("Erro ao excluir cliente: " + erro.message);
+                });
+            }
+        } else {
+            window.alert("Cliente ou código inválido.");
         }
     }
+    
+    
+    
 
     return (
         <>
@@ -38,39 +45,32 @@ export default function TabelaProdutos(props) {
                 <Table striped bordered hover>
                     <thead>
                         <th>Código</th>
-                        <th>Descrição</th>
-                        <th>Preço de custo</th>
-                        <th>Preço de venda</th>
-                        <th>Qtd. em estoque</th>
-                        <th>Imagem</th>
-                        <th>Validade</th>
+                        <th>Nome</th>
+                        <th>Endereço</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
                         <th>Ações</th>
                     </thead>
                     <tbody>
                         {
-                            props.listaDeProdutos?.map((produto) => {
+                            props.listaDeClientes?.map((cliente) => {
                                 return (
                                     <tr>
-                                        <td>{produto.codigo}</td>
-                                        <td>{produto.descricao}</td>
-                                        <td>{produto.precoCusto}</td>
-                                        <td>{produto.precoVenda}</td>
-                                        <td>{produto.qtdEstoque}</td>
-                                        <td><img style={{
-                                                          "width":"40px",
-                                                          "height":"40px"
-                                                        }} src={produto.urlImagem} alt="foto do produto" /></td>
-                                        <td>{new Date(produto.dataValidade).toLocaleDateString()}</td>
+                                        <td>{cliente.codigo}</td>
+                                        <td>{cliente.nome}</td>
+                                        <td>{cliente.endereco}</td>
+                                        <td>{cliente.telefone}</td>
+                                        <td>{cliente.email}</td>
                                         <td>
                                             <Button onClick={()=>{
-                                                editarProduto(produto);
+                                                editarCliente(cliente);
                                             }}variant="warning">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                                 </svg>
                                             </Button> <Button onClick={ ()=> {
-                                                excluirProdutoFrontEnd(produto);
+                                                excluirClienteFrontEnd(cliente);
                                             }} variant="danger">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -84,14 +84,11 @@ export default function TabelaProdutos(props) {
                         }
                     </tbody>
                 </Table>
-                <p>Quatidade de produtos cadastrados: {props.listaDeProdutos.length}</p>
+                <p>Quatidade de clientes cadastrados: {props.listaDeClientes.length}</p>
             </Container>
         </>
     );
 }
-
-
-
 
 
 
@@ -101,30 +98,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Table } from "react-bootstrap";
 import ESTADO from "../../../redux/estados"; // Ajuste o caminho se necessário
 import { useEffect } from "react";
-import { fetchProdutos, deleteProduto } from "../../../redux/produtoSlice";
+import { fetchClientes, deleteCliente } from "../../../redux/clienteSlice";
 
-export default function TabelaProdutos({ setExibirTabela, setModoEdicao, setProdutoSelecionado }) {
+export default function TabelaClientes({ setExibirTabela, setModoEdicao, setClienteSelecionado }) {
   const dispatch = useDispatch();
-  const { listaDeProdutos, estado, mensagem } = useSelector((state) => state.produtos);
+  const { listaDeClientes, estado, mensagem } = useSelector((state) => state.clientes);
 
   useEffect(() => {
-    dispatch(fetchProdutos());
+    dispatch(fetchClientes());
   }, [dispatch]);
 
-  function editarProduto(produto) {
+  function editarCliente(cliente) {
     setModoEdicao(true);
-    setProdutoSelecionado(produto);
+    setClienteSelecionado(cliente);
     setExibirTabela(false);
   }
 
-  function excluirProdutoHandler(produto) {
-    if (window.confirm(`Deseja realmente excluir o privilégio ${produto.descricao}?`)) {
-      dispatch(deleteProduto(produto));
+  function excluirClienteHandler(cliente) {
+    if (window.confirm(`Deseja realmente excluir o privilégio ${cliente.descricao}?`)) {
+      dispatch(deleteCliente(cliente));
     }
   }
 
   if (estado === ESTADO.PENDENTE) {
-    return <p>Carregando produtos...</p>;
+    return <p>Carregando clientes...</p>;
   }
 
   if (estado === ESTADO.ERRO) {
@@ -140,39 +137,32 @@ export default function TabelaProdutos({ setExibirTabela, setModoEdicao, setProd
         <thead>
           <tr>
             <th>Código</th>
-            <th>Descrição</th>
-            <th>Preço de custo</th>
-            <th>Preço de venda</th>
-            <th>Qtd. em estoque</th>
-            <th>Imagem</th>
-            <th>Validade</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Telefone</th>
+            <th>Email</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {listaDeProdutos.map((produto) => (
-            <tr key={produto.codigo}>
-                <td>{produto.codigo}</td>
-                <td>{produto.descricao}</td>
-                <td>{produto.precoCusto}</td>
-                <td>{produto.precoVenda}</td>
-                <td>{produto.qtdEstoque}</td>
-                <td><img style={{
-                                    "width":"40px",
-                                    "height":"40px"
-                                }} src={produto.urlImagem} alt="foto do produto" /></td>
-                <td>{new Date(produto.dataValidade).toLocaleDateString()}</td>
+          {listaDeClientes.map((cliente) => (
+            <tr key={cliente.codigo}>
+                <td>{cliente.codigo}</td>
+                <td>{cliente.nome}</td>
+                <td>{cliente.endereco}</td>
+                <td>{cliente.telefone}</td>
+                <td>{cliente.email}</td>
               <td>
 
               <Button onClick={()=>{
-                    editarProduto(produto);
+                    editarCliente(cliente);
                 }}variant="warning">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                     </svg>
                 </Button> <Button onClick={ ()=> {
-                    excluirProdutoHandler(produto);
+                    excluirClienteHandler(cliente);
                 }} variant="danger">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -184,10 +174,11 @@ export default function TabelaProdutos({ setExibirTabela, setModoEdicao, setProd
           ))}
         </tbody>
       </Table>
-      <p>Quantidade de produtos cadastrados: {listaDeProdutos.length}</p>
+      <p>Quantidade de clientes cadastrados: {listaDeClientes.length}</p>
     </Container>
   );
 }*/
+
 
 
 
